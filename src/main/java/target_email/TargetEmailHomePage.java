@@ -12,10 +12,10 @@ public class TargetEmailHomePage {
 
     private WebDriver driver;
 
-    @FindBy(xpath = "//*[@id='mailAddress']")
+    @FindBy(xpath = "//*[@id='mail_address']")
     private WebElement emailAddress;
 
-    @FindBy(xpath = "//*[@id='ui-id-1']")
+    @FindBy(xpath = "//span[contains(.,'Google Cloud Platform Price Estimate')]//preceding::div[@class='small_message_icon_box']")
     private WebElement googleEmailHeader;
 
     @FindBy(xpath = "//*[@id='mobilepadding']//td[2]//h3[1]")
@@ -27,13 +27,13 @@ public class TargetEmailHomePage {
     }
 
     public String getEmailAddress() {
-        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(emailAddress));
+        new WebDriverWait(driver, 10).until(ExpectedConditions.attributeToBeNotEmpty(emailAddress,"value"));
         return emailAddress.getAttribute("value");
     }
 
     public String getEstimatedCost() {
-        new WebDriverWait(driver, 600, 1000).until(ExpectedConditions.visibilityOf(googleEmailHeader));
-        googleEmailHeader.sendKeys(Keys.ENTER);
+        new WebDriverWait(driver, 600, 1000).until(ExpectedConditions.elementToBeClickable(googleEmailHeader));
+        googleEmailHeader.click();
         return estimatedCostField.getText();
     }
 }
