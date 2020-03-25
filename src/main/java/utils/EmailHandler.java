@@ -1,3 +1,5 @@
+package utils;
+
 import calculator.EstimationResultsPage;
 import target_email.TargetEmailHomePage;
 import org.openqa.selenium.JavascriptExecutor;

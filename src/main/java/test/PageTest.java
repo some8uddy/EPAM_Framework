@@ -1,16 +1,14 @@
+package test;
 
 import calculator.CalculatorPage;
 import calculator.EstimationResultsPage;
 import calculator.HomePage;
 import calculator.SearchResultsPage;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import utils.EmailHandler;
 
-public class PageTest {
+public class PageTest extends CommonConditions{
 
     private static final String HOMEPAGE_URL = "https://cloud.google.com/";
     private static final String SEARCH_QUERY = "Google Cloud Platform Pricing Calculator";
@@ -25,15 +23,9 @@ public class PageTest {
     private static final String COMMITED_USAGE = "1 Year";
     private static final String EXPECTED_ESTIMATE_HEADER_NAME = "Compute Engine";
 
-    private WebDriver driver;
     private SearchResultsPage searchResultsPage;
     private CalculatorPage calculatorPage;
     private EstimationResultsPage estimationsResultPage;
-
-    @BeforeTest(alwaysRun = true)
-    public void browserSetUp() {
-        driver = new ChromeDriver();
-    }
 
     @Test(priority = 1)
     public void testSubmitSearchQuery() {
@@ -79,11 +71,5 @@ public class PageTest {
                                         .sendEstimationsToEmail()
                                         .getEstimatedCostFromEmail();
         Assert.assertTrue(estimatedCost.contains(estimatedCostFromEmail));
-    }
-
-    @AfterTest(alwaysRun = true)
-    public void browserTearDown() {
-        driver.quit();
-        driver = null;
     }
 }
