@@ -1,6 +1,5 @@
 package target_email;
 
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -27,7 +26,7 @@ public class TargetEmailHomePage {
     }
 
     public String getEmailAddress() {
-        new WebDriverWait(driver, 10).until(ExpectedConditions.attributeToBeNotEmpty(emailAddress,"value"));
+        new WebDriverWait(driver, 10).until(ExpectedConditions.attributeToBeNotEmpty(emailAddress, "value"));
         return emailAddress.getAttribute("value");
     }
 

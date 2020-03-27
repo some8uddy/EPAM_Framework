@@ -8,7 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import utils.EmailHandler;
 
-public class PageTest extends CommonConditions{
+public class PageTest extends CommonConditions {
 
     private static final String HOMEPAGE_URL = "https://cloud.google.com/";
     private static final String SEARCH_QUERY = "Google Cloud Platform Pricing Calculator";
@@ -66,10 +66,10 @@ public class PageTest extends CommonConditions{
         String estimatedCost = estimationsResultPage.getEstimatedCost();
         EmailHandler emailHandler = new EmailHandler(driver, estimationsResultPage);
         String estimatedCostFromEmail = emailHandler.openTargetEmailPage()
-                                        .copyEmailAddress()
-                                        .pasteEmailAddressToEstimationResultsForm()
-                                        .sendEstimationsToEmail()
-                                        .getEstimatedCostFromEmail();
+                                                    .copyEmailAddress()
+                                                    .pasteEmailAddressToEstimationResultsForm()
+                                                    .sendEstimationsToEmail()
+                                                    .getEstimatedCostFromEmail();
         Assert.assertTrue(estimatedCost.contains(estimatedCostFromEmail));
     }
 }
