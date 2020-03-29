@@ -1,9 +1,9 @@
 package utils;
 
-import calculator.EstimationResultsPage;
+import page.EstimationResultsPage;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import target_email.TargetEmailHomePage;
+import page.TargetEmailHomePage;
 
 import java.util.ArrayList;
 

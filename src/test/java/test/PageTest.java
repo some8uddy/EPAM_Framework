@@ -1,9 +1,9 @@
 package test;
 
-import calculator.CalculatorPage;
-import calculator.EstimationResultsPage;
-import calculator.HomePage;
-import calculator.SearchResultsPage;
+import page.CalculatorPage;
+import page.EstimationResultsPage;
+import page.HomePage;
+import page.SearchResultsPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import utils.EmailHandler;
