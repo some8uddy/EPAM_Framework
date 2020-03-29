@@ -1,64 +1,58 @@
 package test;
 
+import model.Order;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 import page.CalculatorPage;
 import page.EstimationResultsPage;
 import page.HomePage;
 import page.SearchResultsPage;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import service.OrderCreator;
 import utils.EmailHandler;
 
 public class PageTest extends CommonConditions {
 
-    private static final String HOMEPAGE_URL = "https://cloud.google.com/";
-    private static final String SEARCH_QUERY = "Google Cloud Platform Pricing Calculator";
-    private static final String NUMBER_OF_INSTANCES = "4";
-    private static final String OPERATING_SYSTEM = "Free: Debian, CentOS, CoreOS, Ubuntu, or other User Provided OS";
-    private static final String VM_CLASS = "Regular";
-    private static final String INSTANCE_TYPE = "n1-standard-8";
-    private static final String NUMBER_OF_GPU = "1";
-    private static final String GPU_TYPE = "NVIDIA Tesla V100";
-    private static final String LOCAL_SSD = "2x375 GB";
-    private static final String DATACENTER_LOCATION = "Frankfurt";
-    private static final String COMMITED_USAGE = "1 Year";
-    private static final String EXPECTED_ESTIMATE_HEADER_NAME = "Compute Engine";
-
     private SearchResultsPage searchResultsPage;
     private CalculatorPage calculatorPage;
     private EstimationResultsPage estimationsResultPage;
+    private Order testOrder;
 
     @Test(priority = 1)
     public void testSubmitSearchQuery() {
+        testOrder = OrderCreator.withCredentialsFromProperty();
+        String expectedMessage = testOrder.getSearchQuery();
         searchResultsPage = new HomePage(driver)
-            .openPage(HOMEPAGE_URL)
-            .pasteSearchQuery(SEARCH_QUERY)
+            .openPage(testOrder)
+            .pasteSearchQuery(testOrder)
             .submitQuery();
         String actualSearchMessage = searchResultsPage.getSearchMessage();
-        Assert.assertTrue(actualSearchMessage.contains(SEARCH_QUERY));
+        Assert.assertTrue(actualSearchMessage.contains(expectedMessage));
     }
 
     @Test(priority = 2)
     public void testOpenCalculatorPage() {
         calculatorPage = searchResultsPage.clickLink();
+        String expectedMessage = testOrder.getSearchQuery();
         String actualFormName = calculatorPage.getFrameName();
-        Assert.assertTrue(actualFormName.contains(SEARCH_QUERY));
+        Assert.assertTrue(actualFormName.contains(expectedMessage));
     }
 
     @Test(priority = 3)
     public void testSetData() {
+        String expectedMessage = testOrder.getExpectedEstimateHeaderName();
         estimationsResultPage = calculatorPage
-            .setNumberOfInstances(NUMBER_OF_INSTANCES)
-            .selectOperatingSystem(OPERATING_SYSTEM)
-            .selectVmClass(VM_CLASS)
-            .selectInstanceType(INSTANCE_TYPE)
+            .setNumberOfInstances(testOrder)
+            .selectOperatingSystem(testOrder)
+            .selectVmClass(testOrder)
+            .selectInstanceType(testOrder)
             .checkAddGpusBox()
-            .selectNumberOfGpu(NUMBER_OF_GPU)
-            .selectGpuType(GPU_TYPE)
-            .selectLocalSsd(LOCAL_SSD)
-            .selectDatacentrLocation(DATACENTER_LOCATION)
-            .selectCommittedUsage(COMMITED_USAGE)
+            .selectNumberOfGpu(testOrder)
+            .selectGpuType(testOrder)
+            .selectLocalSsd(testOrder)
+            .selectDatacentrLocation(testOrder)
+            .selectCommittedUsage(testOrder)
             .submit();
-        Assert.assertTrue(estimationsResultPage.isEstimateHeaderTextEqualTo(EXPECTED_ESTIMATE_HEADER_NAME));
+        Assert.assertTrue(estimationsResultPage.isEstimateHeaderTextEqualTo(expectedMessage));
     }
 
     @Test(priority = 4)

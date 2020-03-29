@@ -1,5 +1,6 @@
 package page;
 
+import model.Order;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -69,25 +70,25 @@ public class CalculatorPage {
         return frameName;
     }
 
-    public CalculatorPage setNumberOfInstances(String numberOfInstances) {
+    public CalculatorPage setNumberOfInstances(Order order) {
         switchToFrame();
-        instancesField.sendKeys(numberOfInstances);
+        instancesField.sendKeys(order.getNumberOfInstances());
         switchToDefaultContent();
         return this;
     }
 
-    public CalculatorPage selectOperatingSystem(String operatingSystem) {
-        selectFromDropList(osDropDown, operatingSystem);
+    public CalculatorPage selectOperatingSystem(Order order) {
+        selectFromDropList(osDropDown, order.getOperatingSystem());
         return this;
     }
 
-    public CalculatorPage selectVmClass(String vmClass) {
-        selectFromDropList(mashineClassDropDown, vmClass);
+    public CalculatorPage selectVmClass(Order order) {
+        selectFromDropList(mashineClassDropDown, order.getVmClass());
         return this;
     }
 
-    public CalculatorPage selectInstanceType(String instanceType) {
-        selectFromDropList(instanceTypeDropDown, instanceType);
+    public CalculatorPage selectInstanceType(Order order) {
+        selectFromDropList(instanceTypeDropDown, order.getInstanceType());
         return this;
     }
 
@@ -98,28 +99,28 @@ public class CalculatorPage {
         return this;
     }
 
-    public CalculatorPage selectNumberOfGpu(String numberOfGpu) {
-        selectFromDropList(gpuCountDropDown, numberOfGpu);
+    public CalculatorPage selectNumberOfGpu(Order order) {
+        selectFromDropList(gpuCountDropDown, order.getNumberOfGpu());
         return this;
     }
 
-    public CalculatorPage selectGpuType(String gpuType) {
-        selectFromDropList(gpuTypeDropDown, gpuType);
+    public CalculatorPage selectGpuType(Order order) {
+        selectFromDropList(gpuTypeDropDown, order.getGpuType());
         return this;
     }
 
-    public CalculatorPage selectLocalSsd(String ssdSetting) {
-        selectFromDropList(ssdDropDown, ssdSetting);
+    public CalculatorPage selectLocalSsd(Order order) {
+        selectFromDropList(ssdDropDown, order.getLocalSsd());
         return this;
     }
 
-    public CalculatorPage selectDatacentrLocation(String datacenterLocation) {
-        selectFromDropList(datacenterLocationDropDown, datacenterLocation);
+    public CalculatorPage selectDatacentrLocation(Order order) {
+        selectFromDropList(datacenterLocationDropDown, order.getDatacenterLocation());
         return this;
     }
 
-    public CalculatorPage selectCommittedUsage(String committedTime) {
-        selectFromDropList(commitedUsageDropDown, committedTime);
+    public CalculatorPage selectCommittedUsage(Order order) {
+        selectFromDropList(commitedUsageDropDown, order.getCommitedUsage());
         return this;
     }
 

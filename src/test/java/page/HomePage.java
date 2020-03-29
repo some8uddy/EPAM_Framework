@@ -1,5 +1,6 @@
 package page;
 
+import model.Order;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,16 +20,16 @@ public class HomePage {
         PageFactory.initElements(driver, this);
     }
 
-    public HomePage openPage(String url) {
-        driver.get(url);
+    public HomePage openPage(Order order) {
+        driver.get(order.getHomePageUrl());
         new WebDriverWait(driver, 10)
             .until(ExpectedConditions.elementToBeClickable(searchField));
         return this;
     }
 
-    public HomePage pasteSearchQuery(String message) {
+    public HomePage pasteSearchQuery(Order order) {
         searchField.click();
-        searchField.sendKeys(message);
+        searchField.sendKeys(order.getSearchQuery());
         return this;
     }
 
