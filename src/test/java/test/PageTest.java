@@ -49,7 +49,7 @@ public class PageTest extends CommonConditions {
             .selectNumberOfGpu(testOrder)
             .selectGpuType(testOrder)
             .selectLocalSsd(testOrder)
-            .selectDatacentrLocation(testOrder)
+            .selectDataCenterLocation(testOrder)
             .selectCommittedUsage(testOrder)
             .submit();
         Assert.assertTrue(estimationsResultPage.isEstimateHeaderTextEqualTo(expectedMessage));

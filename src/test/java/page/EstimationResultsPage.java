@@ -8,6 +8,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import static utils.PageUtils.switchToDefaultContent;
+import static utils.PageUtils.switchToFrame;
+
 public class EstimationResultsPage {
 
     private WebDriver driver;
@@ -36,10 +39,21 @@ public class EstimationResultsPage {
     @FindBy(xpath = "//form[@name='emailForm']//button[contains(.,'Send')]")
     private WebElement sendEmailButton;
 
-
     public EstimationResultsPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+    }
+
+    public WebDriver getDriver() {
+        return driver;
+    }
+
+    public WebElement getOuterFrame() {
+        return outerFrame;
+    }
+
+    public WebElement getInnerFrame() {
+        return innerFrame;
     }
 
     public boolean isEstimateHeaderTextEqualTo(String expectedHeaderName) {
@@ -47,43 +61,35 @@ public class EstimationResultsPage {
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(outerFrame));
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(innerFrame));
         wait.until(ExpectedConditions.textToBePresentInElement(estimateHeader, expectedHeaderName));
-        switchToDefaultContent();
+        switchToDefaultContent(driver);
         return true;
     }
 
     public String getEstimatedCost() {
-        switchToFrame();
+        switchToFrame(driver, outerFrame, innerFrame);
         String estimatedCost = estimatedCostField.getText();
-        switchToDefaultContent();
+        switchToDefaultContent(driver);
         return estimatedCost;
     }
 
     public EstimationResultsPage openEmailEstimateForm() {
-        switchToFrame();
+        switchToFrame(driver, outerFrame, innerFrame);
         emailEstimateButton.sendKeys(Keys.ENTER);
         new WebDriverWait(driver, 10)
             .until(ExpectedConditions.textToBePresentInElement(emailEstimateForm, "Email Your Estimate"));
-        switchToDefaultContent();
+        switchToDefaultContent(driver);
         return this;
     }
 
     public void pasteTargetEmail(String targetEmailAddress) {
-        switchToFrame();
+        switchToFrame(driver, outerFrame, innerFrame);
         targetEmailField.sendKeys(targetEmailAddress);
-        switchToDefaultContent();
+        switchToDefaultContent(driver);
     }
 
     public void sendEmail() {
-        switchToFrame();
+        switchToFrame(driver, outerFrame, innerFrame);
         sendEmailButton.sendKeys(Keys.ENTER);
-        switchToDefaultContent();
-    }
-
-    private void switchToDefaultContent() {
-        driver.switchTo().defaultContent();
-    }
-
-    private void switchToFrame() {
-        driver.switchTo().frame(outerFrame).switchTo().frame(innerFrame);
+        switchToDefaultContent(driver);
     }
 }

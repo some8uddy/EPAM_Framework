@@ -10,6 +10,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import static utils.PageUtils.switchToDefaultContent;
+import static utils.PageUtils.switchToFrame;
+
 public class CalculatorPage {
 
     private WebDriver driver;
@@ -30,7 +33,7 @@ public class CalculatorPage {
     private WebElement osDropDown;
 
     @FindBy(xpath = "//md-select[@ng-model='listingCtrl.computeServer.class']")
-    private WebElement mashineClassDropDown;
+    private WebElement machineClassDropDown;
 
     @FindBy(xpath = "//md-select[@ng-model='listingCtrl.computeServer.instance']")
     private WebElement instanceTypeDropDown;
@@ -48,10 +51,10 @@ public class CalculatorPage {
     private WebElement ssdDropDown;
 
     @FindBy(xpath = "//md-select[@ng-model='listingCtrl.computeServer.location']")
-    private WebElement datacenterLocationDropDown;
+    private WebElement dataCenterLocationDropDown;
 
     @FindBy(xpath = "//md-select[@ng-model='listingCtrl.computeServer.cud']")
-    private WebElement commitedUsageDropDown;
+    private WebElement committedUsageDropDown;
 
     @FindBy(xpath = "//button[@class='md-raised md-primary cpc-button md-button md-ink-ripple']")
     private WebElement addToEstimationButton;
@@ -66,14 +69,14 @@ public class CalculatorPage {
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(outerFrame));
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(innerFrame));
         String frameName = frameHeader.getText();
-        switchToDefaultContent();
+        switchToDefaultContent(driver);
         return frameName;
     }
 
     public CalculatorPage setNumberOfInstances(Order order) {
-        switchToFrame();
+        switchToFrame(driver, outerFrame, innerFrame);
         instancesField.sendKeys(order.getNumberOfInstances());
-        switchToDefaultContent();
+        switchToDefaultContent(driver);
         return this;
     }
 
@@ -83,7 +86,7 @@ public class CalculatorPage {
     }
 
     public CalculatorPage selectVmClass(Order order) {
-        selectFromDropList(mashineClassDropDown, order.getVmClass());
+        selectFromDropList(machineClassDropDown, order.getVmClass());
         return this;
     }
 
@@ -93,9 +96,9 @@ public class CalculatorPage {
     }
 
     public CalculatorPage checkAddGpusBox() {
-        switchToFrame();
+        switchToFrame(driver, outerFrame, innerFrame);
         addGpusCheckBox.sendKeys(Keys.ENTER);
-        switchToDefaultContent();
+        switchToDefaultContent(driver);
         return this;
     }
 
@@ -114,39 +117,31 @@ public class CalculatorPage {
         return this;
     }
 
-    public CalculatorPage selectDatacentrLocation(Order order) {
-        selectFromDropList(datacenterLocationDropDown, order.getDatacenterLocation());
+    public CalculatorPage selectDataCenterLocation(Order order) {
+        selectFromDropList(dataCenterLocationDropDown, order.getDatacenterLocation());
         return this;
     }
 
     public CalculatorPage selectCommittedUsage(Order order) {
-        selectFromDropList(commitedUsageDropDown, order.getCommitedUsage());
+        selectFromDropList(committedUsageDropDown, order.getCommitedUsage());
         return this;
     }
 
     public EstimationResultsPage submit() {
-        switchToFrame();
+        switchToFrame(driver, outerFrame, innerFrame);
         addToEstimationButton.sendKeys(Keys.ENTER);
-        switchToDefaultContent();
+        switchToDefaultContent(driver);
         return new EstimationResultsPage(driver);
     }
 
     private void selectFromDropList(WebElement webElement, String selection) {
-        switchToFrame();
+        switchToFrame(driver, outerFrame, innerFrame);
         webElement.sendKeys(Keys.ENTER);
         String xpathLocator = String.format("//div[@class='md-select-menu-container md-active md-clickable']" +
             "//md-option[contains(.,'%s')]", selection);
         WebElement option = new WebDriverWait(driver, 10)
             .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathLocator)));
         option.sendKeys(Keys.ENTER);
-        switchToDefaultContent();
-    }
-
-    private void switchToFrame() {
-        driver.switchTo().frame(outerFrame).switchTo().frame(innerFrame);
-    }
-
-    private void switchToDefaultContent() {
-        driver.switchTo().defaultContent();
+        switchToDefaultContent(driver);
     }
 }
