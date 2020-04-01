@@ -2,21 +2,20 @@ package test;
 
 import driver.DriverSingleton;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterGroups;
+import org.testng.annotations.BeforeGroups;
 
 public class CommonConditions {
 
     protected WebDriver driver;
 
-    @BeforeTest(alwaysRun = true)
+    @BeforeGroups(value = {"smoke", "main"}, alwaysRun = true)
     public void browserSetUp() {
         driver = DriverSingleton.getDriver();
     }
 
-    @AfterTest(alwaysRun = true)
+    @AfterGroups(value = {"smoke", "main"}, alwaysRun = true)
     public void browserTearDown() {
         DriverSingleton.closeDriver();
     }
-
 }

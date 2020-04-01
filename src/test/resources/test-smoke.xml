@@ -1,17 +1,15 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="All Tests" verbose="1">
-    <test name="All Tests">
+<suite name="Smoke" verbose="1">
+    <test name="Web Pages Availability Tests">
         <groups>
             <run>
                 <include name="smoke"/>
-                <include name="main"/>
             </run>
         </groups>
 
         <classes>
             <class name="test.WebPagesAvailabilityTest"/>
-            <class name="test.PageTest"/>
         </classes>
     </test>
 </suite>

@@ -59,6 +59,10 @@ public class EmailHandler {
         return targetEmailHomePage.getEstimatedCost();
     }
 
+    public String getTargetEmailAddress() {
+        return targetEmailAddress;
+    }
+
     private void switchToEmailTab() {
         driver.switchTo().window(targetEmailWindowHandler);
     }

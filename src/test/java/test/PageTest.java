@@ -17,7 +17,7 @@ public class PageTest extends CommonConditions {
     private EstimationResultsPage estimationsResultPage;
     private Order testOrder;
 
-    @Test(priority = 1)
+    @Test(priority = 1, groups = "main")
     public void testSubmitSearchQuery() {
         testOrder = OrderCreator.withCredentialsFromProperty();
         String expectedMessage = testOrder.getSearchQuery();
@@ -27,9 +27,10 @@ public class PageTest extends CommonConditions {
             .submitQuery();
         String actualSearchMessage = searchResultsPage.getSearchMessage();
         Assert.assertTrue(actualSearchMessage.contains(expectedMessage));
+        Assert.assertNotNull(searchResultsPage);
     }
 
-    @Test(priority = 2)
+    @Test(priority = 2, groups = "main")
     public void testOpenCalculatorPage() {
         calculatorPage = searchResultsPage.clickLink();
         String expectedMessage = testOrder.getSearchQuery();
@@ -37,7 +38,7 @@ public class PageTest extends CommonConditions {
         Assert.assertTrue(actualFormName.contains(expectedMessage));
     }
 
-    @Test(priority = 3)
+    @Test(priority = 3, groups = "main")
     public void testSetData() {
         String expectedMessage = testOrder.getExpectedEstimateHeaderName();
         estimationsResultPage = calculatorPage
@@ -55,7 +56,7 @@ public class PageTest extends CommonConditions {
         Assert.assertTrue(estimationsResultPage.isEstimateHeaderTextEqualTo(expectedMessage));
     }
 
-    @Test(priority = 4)
+    @Test(priority = 4, groups = "main")
     public void testGetEstimateThroughEmail() {
         String estimatedCost = estimationsResultPage.getEstimatedCost();
         EmailHandler emailHandler = new EmailHandler(driver, estimationsResultPage);
