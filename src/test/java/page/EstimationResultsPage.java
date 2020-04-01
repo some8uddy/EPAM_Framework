@@ -48,14 +48,6 @@ public class EstimationResultsPage {
         return driver;
     }
 
-    public WebElement getOuterFrame() {
-        return outerFrame;
-    }
-
-    public WebElement getInnerFrame() {
-        return innerFrame;
-    }
-
     public boolean isEstimateHeaderTextEqualTo(String expectedHeaderName) {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(outerFrame));
