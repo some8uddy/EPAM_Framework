@@ -4,7 +4,10 @@ import driver.DriverSingleton;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterGroups;
 import org.testng.annotations.BeforeGroups;
+import org.testng.annotations.Listeners;
+import utils.TestListener;
 
+@Listeners({TestListener.class})
 public class CommonConditions {
 
     protected WebDriver driver;

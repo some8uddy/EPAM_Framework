@@ -1,5 +1,7 @@
 package page;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TargetEmailHomePage {
 
+    private final Logger logger = LogManager.getRootLogger();
     private WebDriver driver;
 
     @FindBy(xpath = "//*[@id='mail_address']")
@@ -27,12 +30,14 @@ public class TargetEmailHomePage {
 
     public String getEmailAddress() {
         new WebDriverWait(driver, 10).until(ExpectedConditions.attributeToBeNotEmpty(emailAddress, "value"));
+        logger.info("Target email created.");
         return emailAddress.getAttribute("value");
     }
 
     public String getEstimatedCost() {
-        new WebDriverWait(driver, 600, 1000).until(ExpectedConditions.elementToBeClickable(googleEmailHeader));
+        new WebDriverWait(driver, 15, 1000).until(ExpectedConditions.elementToBeClickable(googleEmailHeader));
         googleEmailHeader.click();
+        logger.info("Order estimation info received.");
         return estimatedCostField.getText();
     }
 }

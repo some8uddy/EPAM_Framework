@@ -1,5 +1,7 @@
 package page;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,6 +15,7 @@ import static utils.PageUtils.switchToFrame;
 
 public class EstimationResultsPage {
 
+    private final Logger logger = LogManager.getRootLogger();
     private WebDriver driver;
 
     @FindBy(xpath = "//*[@id='cloud-site']/devsite-iframe/iframe")
@@ -54,6 +57,7 @@ public class EstimationResultsPage {
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(innerFrame));
         wait.until(ExpectedConditions.textToBePresentInElement(estimateHeader, expectedHeaderName));
         switchToDefaultContent(driver);
+        logger.info("Estimation page opened.");
         return true;
     }
 

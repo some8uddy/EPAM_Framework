@@ -1,6 +1,8 @@
 package page;
 
 import model.Order;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -15,6 +17,7 @@ import static utils.PageUtils.switchToFrame;
 
 public class CalculatorPage {
 
+    private final Logger logger = LogManager.getRootLogger();
     private WebDriver driver;
 
     @FindBy(xpath = "//*[@id='cloud-site']/devsite-iframe/iframe")
@@ -70,6 +73,7 @@ public class CalculatorPage {
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(innerFrame));
         String frameName = frameHeader.getText();
         switchToDefaultContent(driver);
+        logger.info("Calculator page opened.");
         return frameName;
     }
 
@@ -130,6 +134,7 @@ public class CalculatorPage {
     public EstimationResultsPage submit() {
         switchToFrame(driver, outerFrame, innerFrame);
         addToEstimationButton.sendKeys(Keys.ENTER);
+        logger.info("Order data submitted for calculation.");
         switchToDefaultContent(driver);
         return new EstimationResultsPage(driver);
     }

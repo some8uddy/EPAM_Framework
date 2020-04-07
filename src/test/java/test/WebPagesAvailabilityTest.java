@@ -22,7 +22,8 @@ public class WebPagesAvailabilityTest extends CommonConditions {
     public void testEmailPageIsAccessible() {
         EmailHandler emailHandler = new EmailHandler(driver, new EstimationResultsPage(driver));
         String targetEmailAddress = emailHandler.openTargetEmailPage()
-                                                .copyEmailAddress().getTargetEmailAddress();
+                                                .copyEmailAddress()
+                                                .getTargetEmailAddress();
         Assert.assertNotNull(targetEmailAddress);
     }
 }

@@ -1,5 +1,7 @@
 package utils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import page.EstimationResultsPage;
@@ -8,6 +10,8 @@ import page.TargetEmailHomePage;
 import java.util.ArrayList;
 
 public class EmailHandler {
+
+    private final Logger logger = LogManager.getRootLogger();
     private WebDriver driver;
     private EstimationResultsPage estimationResultsPage;
     private TargetEmailHomePage targetEmailHomePage;
@@ -32,12 +36,14 @@ public class EmailHandler {
         }
         switchToEmailTab();
         targetEmailHomePage = new TargetEmailHomePage(driver);
+        logger.info("Target email page opened.");
         return this;
     }
 
     public EmailHandler copyEmailAddress() {
         switchToEmailTab();
         targetEmailAddress = targetEmailHomePage.getEmailAddress();
+        logger.info("Target email address acquired.");
         return this;
     }
 
@@ -51,6 +57,7 @@ public class EmailHandler {
     public EmailHandler sendEstimationsToEmail() {
         switchToEstimationTab();
         estimationResultsPage.sendEmail();
+        logger.info("Estimation info was sent to target email address.");
         return this;
     }
 
