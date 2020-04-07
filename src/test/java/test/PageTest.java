@@ -27,7 +27,6 @@ public class PageTest extends CommonConditions {
             .submitQuery();
         String actualSearchMessage = searchResultsPage.getSearchMessage();
         Assert.assertTrue(actualSearchMessage.contains(expectedMessage));
-        Assert.assertNotNull(searchResultsPage);
     }
 
     @Test(priority = 2, groups = "main")
