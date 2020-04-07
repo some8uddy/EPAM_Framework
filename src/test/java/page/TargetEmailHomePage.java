@@ -1,7 +1,5 @@
 package page;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,10 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class TargetEmailHomePage {
-
-    private final Logger logger = LogManager.getRootLogger();
-    private WebDriver driver;
+public class TargetEmailHomePage extends AbstractPage {
 
     @FindBy(xpath = "//*[@id='mail_address']")
     private WebElement emailAddress;
@@ -24,18 +19,18 @@ public class TargetEmailHomePage {
     private WebElement estimatedCostField;
 
     public TargetEmailHomePage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         PageFactory.initElements(driver, this);
     }
 
     public String getEmailAddress() {
-        new WebDriverWait(driver, 10).until(ExpectedConditions.attributeToBeNotEmpty(emailAddress, "value"));
+        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS).until(ExpectedConditions.attributeToBeNotEmpty(emailAddress, "value"));
         logger.info("Target email created.");
         return emailAddress.getAttribute("value");
     }
 
     public String getEstimatedCost() {
-        new WebDriverWait(driver, 15, 1000).until(ExpectedConditions.elementToBeClickable(googleEmailHeader));
+        new WebDriverWait(driver, 60 * 10, 1000).until(ExpectedConditions.elementToBeClickable(googleEmailHeader));
         googleEmailHeader.click();
         logger.info("Order estimation info received.");
         return estimatedCostField.getText();

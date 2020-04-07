@@ -1,7 +1,5 @@
 package page;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,10 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import static utils.PageUtils.switchToDefaultContent;
 import static utils.PageUtils.switchToFrame;
 
-public class EstimationResultsPage {
-
-    private final Logger logger = LogManager.getRootLogger();
-    private WebDriver driver;
+public class EstimationResultsPage extends AbstractPage {
 
     @FindBy(xpath = "//*[@id='cloud-site']/devsite-iframe/iframe")
     private WebElement outerFrame;
@@ -43,7 +38,7 @@ public class EstimationResultsPage {
     private WebElement sendEmailButton;
 
     public EstimationResultsPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         PageFactory.initElements(driver, this);
     }
 
@@ -52,7 +47,7 @@ public class EstimationResultsPage {
     }
 
     public boolean isEstimateHeaderTextEqualTo(String expectedHeaderName) {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebDriverWait wait = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS);
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(outerFrame));
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(innerFrame));
         wait.until(ExpectedConditions.textToBePresentInElement(estimateHeader, expectedHeaderName));
@@ -71,7 +66,7 @@ public class EstimationResultsPage {
     public EstimationResultsPage openEmailEstimateForm() {
         switchToFrame(driver, outerFrame, innerFrame);
         emailEstimateButton.sendKeys(Keys.ENTER);
-        new WebDriverWait(driver, 10)
+        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
             .until(ExpectedConditions.textToBePresentInElement(emailEstimateForm, "Email Your Estimate"));
         switchToDefaultContent(driver);
         return this;
